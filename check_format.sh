@@ -1,12 +1,12 @@
 #!/bin/bash
-for file in "$PATH"; do
-	if [ -d $file ]
-	then
-		echo "Eror"
-	else
-		if [[ $file == *.txt ]]
-		then
-			echo "File is txt"
-		fi
+
+changed_files = $(git diff --cached --name-only --diff-filter=ACM)
+
+for file in $changed_files; do
+	if [[ ! $file =~ \.txt$ ]]; then
+		echo "Eror, $file is not txt"
+		exit 1
 	fi
-done;
+done
+
+exit 0
